@@ -19,3 +19,6 @@ class Account(Base):
         assert re.match(r"[^@]+@[^@]+\.[^@]+", address), "Invalid email address"
         return address
 
+    def __repr__(self):
+        return f"Account(id={self.id}, auth_id={self.auth_id}, email={self.email})"
+
