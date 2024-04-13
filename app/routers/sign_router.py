@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field, field_validator, ValidationInfo
 from datetime import datetime
 import uuid
 
-from app.shared.logger import get_logger
+from shared.logger import get_logger
 
 
 logger = get_logger(__name__)
