@@ -1,16 +1,18 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field, field_validator, ValidationInfo
 from datetime import datetime
 import uuid
 
-from shared.logger import get_logger
+from auth import get_user
+from utils.logger import get_logger
 
 
 logger = get_logger(__name__)
 
 router = APIRouter(
     prefix="/sign",
-    tags=["Data Signing"]
+    tags=["Data Signing"],
+    dependencies=[Depends(get_user)]
 )
 
 

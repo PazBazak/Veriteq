@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from routers.sign_router import router as sign_router
-from shared.logger import get_logger
+from utils.logger import get_logger
 
 
 logger = get_logger(__name__)
