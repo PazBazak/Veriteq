@@ -1,10 +1,10 @@
-from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import relationship
 from db.database import Base
+from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy.orm import relationship
 
 
 class Blockchain(Base):
-    __tablename__ = 'blockchains'
+    __tablename__ = "blockchains"
 
     id = Column(Integer, primary_key=True)
     name = Column(String(128), unique=True, nullable=False)

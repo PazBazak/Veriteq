@@ -1,11 +1,12 @@
-from sqlalchemy import Column, String, TIMESTAMP, func, Integer
-from sqlalchemy.orm import validates
-from db.database import Base
 import re
+
+from db.database import Base
+from sqlalchemy import TIMESTAMP, Column, Integer, String, func
+from sqlalchemy.orm import validates
 
 
 class Account(Base):
-    __tablename__ = 'accounts'
+    __tablename__ = "accounts"
 
     id = Column(Integer, primary_key=True)
     auth_id = Column(String(255), nullable=False, index=True)
@@ -14,11 +15,10 @@ class Account(Base):
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
     deactivated_at = Column(TIMESTAMP, nullable=True, default=None)
 
-    @validates('email')
+    @validates("email")
     def validate_email(self, key, address):
         assert re.match(r"[^@]+@[^@]+\.[^@]+", address), "Invalid email address"
         return address
 
     def __repr__(self):
         return f"Account(id={self.id}, auth_id={self.auth_id}, email={self.email})"
-

@@ -1,19 +1,14 @@
-from fastapi import APIRouter, Depends
-from pydantic import BaseModel, Field, field_validator, ValidationInfo
-from datetime import datetime
 import uuid
+from datetime import datetime
 
-from auth import get_user
+from auth import get_account
+from fastapi import APIRouter, Depends
+from pydantic import BaseModel, Field, ValidationInfo, field_validator
 from utils.logger import get_logger
-
 
 logger = get_logger(__name__)
 
-router = APIRouter(
-    prefix="/sign",
-    tags=["Data Signing"],
-    dependencies=[Depends(get_user)]
-)
+router = APIRouter(prefix="/sign", tags=["Data Signing"], dependencies=[Depends(get_account)])
 
 
 class SignData(BaseModel):
@@ -21,11 +16,11 @@ class SignData(BaseModel):
     metadata: dict = Field(default=None, example={"item_id": "1234"})
 
     # noinspection PyNestedDecorators
-    @field_validator('metadata')
+    @field_validator("metadata")
     @classmethod
     def check_at_least_one(cls, v, info: ValidationInfo):
-        if not v and not info.data.get('hash'):
-            raise ValueError('Either hash or metadata must be provided')
+        if not v and not info.data.get("hash"):
+            raise ValueError("Either hash or metadata must be provided")
         return v
 
 
@@ -41,11 +36,7 @@ async def mock_blockchain_store(data: dict) -> dict:
 
     logger.info(f"Signed data, created a blockchain transaction - {transaction_id}, at {blockchain_timestamp}")
 
-    return {
-        "transaction_id": transaction_id,
-        "blockchain": "Polygon",
-        "timestamp": blockchain_timestamp
-    }
+    return {"transaction_id": transaction_id, "blockchain": "Polygon", "timestamp": blockchain_timestamp}
 
 
 @router.post("/", response_model=SignDataResponse)
@@ -59,4 +50,3 @@ async def sign_data(data: SignData) -> SignDataResponse:
         blockchain=blockchain_response["blockchain"],
         timestamp=blockchain_response["timestamp"],
     )
-

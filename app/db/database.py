@@ -1,10 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
-
+from sqlalchemy.orm import Session, sessionmaker
 from utils.logger import get_logger
-
 
 logger = get_logger(__name__)
 

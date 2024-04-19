@@ -1,18 +1,13 @@
-from fastapi import Security, HTTPException, status
+from db.crud.api_key import get_account_from_api_key
+from db.database import get_db, Session
+from fastapi import HTTPException, Security, status, Depends
 from fastapi.security import APIKeyHeader
-
-from db import check_api_key, get_user_from_api_key
-
 
 api_key_header = APIKeyHeader(name="X-API-Key")
 
 
-def get_user(api_key_header_value: str = Security(api_key_header)):
-    if check_api_key(api_key_header_value):
-        user = get_user_from_api_key(api_key_header_value)
-        return user
+def get_account(session: Session = Depends(get_db), api_key_header_value: str = Security(api_key_header)):
+    if account := get_account_from_api_key(session, api_key_header_value):
+        return account
 
-    raise HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Missing or invalid API key"
-    )
+    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Missing or invalid API key")

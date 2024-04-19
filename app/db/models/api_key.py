@@ -1,15 +1,16 @@
-from sqlalchemy import Column, Integer, ForeignKey, UUID, Boolean, TIMESTAMP, func
-from sqlalchemy.orm import relationship
-from db.database import Base
 from uuid import uuid4
+
+from db.database import Base
+from sqlalchemy import TIMESTAMP, UUID, Boolean, Column, ForeignKey, Integer, func
+from sqlalchemy.orm import relationship
 
 
 class APIKey(Base):
-    __tablename__ = 'api_keys'
+    __tablename__ = "api_keys"
 
     id = Column(Integer, primary_key=True)
-    account_id = Column(Integer, ForeignKey('accounts.id'), nullable=False, index=True)
-    key = Column(UUID(as_uuid=True), default=uuid4, unique=True, nullable=False)
+    account_id = Column(Integer, ForeignKey("accounts.id"), nullable=False, index=True)
+    key = Column(UUID(as_uuid=True), default=uuid4, unique=True, nullable=False, index=True)
     created_at = Column(TIMESTAMP, server_default=func.now())
     expired_at = Column(TIMESTAMP, nullable=True)
 

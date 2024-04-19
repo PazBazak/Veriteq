@@ -1,12 +1,19 @@
+from typing import NewType
+
 from cryptography.fernet import Fernet
 
-def generate_key():
-    return Fernet.generate_key()
+EncryptionKey = NewType("EncryptionKey", bytes)
 
-def encrypt_data(key, data):
-    cipher_suite = Fernet(key)
-    return cipher_suite.encrypt(data.encode())
 
-def decrypt_data(key, data):
+def generate_key() -> EncryptionKey:
+    return EncryptionKey(Fernet.generate_key())
+
+
+def encrypt_data(key: EncryptionKey, data: bytes) -> bytes:
     cipher_suite = Fernet(key)
-    return cipher_suite.decrypt(data).decode()
+    return cipher_suite.encrypt(data)
+
+
+def decrypt_data(key: EncryptionKey, data: bytes) -> bytes:
+    cipher_suite = Fernet(key)
+    return cipher_suite.decrypt(data)
