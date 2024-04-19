@@ -2,7 +2,7 @@ import re
 
 from db.database import Base
 from sqlalchemy import TIMESTAMP, Column, Integer, String, func
-from sqlalchemy.orm import validates
+from sqlalchemy.orm import validates, relationship
 
 
 class Account(Base):
@@ -14,6 +14,9 @@ class Account(Base):
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
     deactivated_at = Column(TIMESTAMP, nullable=True, default=None)
+
+    api_keys = relationship("APIKey", back_populates="account")
+    transactions = relationship("Transaction", back_populates="account")
 
     @validates("email")
     def validate_email(self, key, address):
