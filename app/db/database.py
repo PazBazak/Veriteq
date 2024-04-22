@@ -13,7 +13,7 @@ logger = get_logger(__name__)
 
 Base = declarative_base()
 
-logger.info("Initializing database engine...")
+logger.info("Initializing database engine")
 database_url = os.environ.get("DATABASE_URL")
 engine = create_engine(database_url)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

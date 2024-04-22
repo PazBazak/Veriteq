@@ -5,7 +5,7 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-logger.info("Initiating FastAPI app...")
+logger.info("Initiating FastAPI app")
 app = FastAPI(root_path="/api")
 
 app.include_router(sign_router, prefix="/v1")

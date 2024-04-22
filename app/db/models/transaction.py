@@ -1,6 +1,15 @@
+import enum
+
 from db.database import Base
-from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, String, func
+from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, String, func, Enum
 from sqlalchemy.orm import relationship
+
+
+class TransactionStatus(enum.Enum):
+    PENDING = 'P'
+    CONFIRMING = 'C'
+    FAILED = 'F'
+    SUCCESSFUL = 'S'
 
 
 class Transaction(Base):
@@ -8,8 +17,9 @@ class Transaction(Base):
 
     id = Column(Integer, primary_key=True)
     blockchain_tx_id = Column(String(255), nullable=False, index=True)
-    timestamp = Column(TIMESTAMP, server_default=func.now(), nullable=False)
-    status = Column(String(50), nullable=False)
+    created_at = Column(TIMESTAMP, server_default=func.now(), nullable=False)
+    timestamp = Column(TIMESTAMP, nullable=False)
+    status = Column(Enum(TransactionStatus), nullable=False)
 
     account_id = Column(Integer, ForeignKey("accounts.id"), nullable=False)
     blockchain_id = Column(Integer, ForeignKey("blockchains.id"), nullable=False)

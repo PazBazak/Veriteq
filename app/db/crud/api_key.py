@@ -9,9 +9,6 @@ logger = get_logger(__name__)
 
 
 def get_account_from_api_key(session: Session, api_key: str) -> Account:
-    """
-    Retrieve the account associated with the given API key.
-    """
     now = datetime.utcnow()
     api_key_instance = (
         session.query(APIKey)
