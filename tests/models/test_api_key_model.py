@@ -1,7 +1,9 @@
-import pytest
 import datetime
 from uuid import uuid4
+
+import pytest
 from sqlalchemy.exc import IntegrityError
+
 from tests.base import BaseTest
 from tests.fake_db import APIKey
 
@@ -33,14 +35,8 @@ class TestAPIKey(BaseTest):
             self.db.commit()
 
     def test_api_key_expiration_handling(self, account):
-        expired_key = APIKey(
-            account_id=account.id,
-            expired_at=datetime.datetime.now() - datetime.timedelta(days=1)
-        )
-        active_key = APIKey(
-            account_id=account.id,
-            expired_at=None
-        )
+        expired_key = APIKey(account_id=account.id, expired_at=datetime.datetime.now() - datetime.timedelta(days=1))
+        active_key = APIKey(account_id=account.id, expired_at=None)
         self.db.add(expired_key)
         self.db.add(active_key)
         self.db.commit()
@@ -50,4 +46,3 @@ class TestAPIKey(BaseTest):
 
         assert fetched_expired_key.expired_at < datetime.datetime.now()
         assert fetched_active_key.expired_at is None
-

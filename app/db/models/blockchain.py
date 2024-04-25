@@ -1,13 +1,15 @@
 from db.database import Base
-from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy import Boolean, Column, Integer, Enum
 from sqlalchemy.orm import relationship
+
+from blockchain_dal.consts import SupportedBlockchains
 
 
 class Blockchain(Base):
     __tablename__ = "blockchains"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(128), unique=True, nullable=False)
+    name = Column(Enum(SupportedBlockchains), nullable=False)
     is_active = Column(Boolean, default=True, nullable=False)
 
     transactions = relationship("Transaction", back_populates="blockchain")

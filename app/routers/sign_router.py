@@ -1,15 +1,13 @@
 import uuid
 from datetime import datetime
 
-from auth import get_authenticated_account
-from db.models.account import Account
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 from pydantic import BaseModel, Field, ValidationInfo, field_validator
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-router = APIRouter(prefix="/sign", tags=["Data Signing"], dependencies=[Depends(get_authenticated_account)])
+router = APIRouter(prefix="/sign", tags=["Data Signing"])
 
 
 class SignData(BaseModel):
@@ -41,7 +39,7 @@ async def mock_blockchain_store(data: dict) -> dict:
 
 
 @router.post("/", response_model=SignDataResponse)
-async def sign_data(data: SignData, account: Account = Depends(get_authenticated_account)) -> SignDataResponse:
+async def sign_data(data: SignData) -> SignDataResponse:  # account: Account = Depends(get_authenticated_account)
     logger.info(f"Request received to sign {data}")
 
     blockchain_response = await mock_blockchain_store(data.dict())

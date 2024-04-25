@@ -2,7 +2,7 @@ import re
 
 from db.database import Base
 from sqlalchemy import TIMESTAMP, Column, Integer, String, func
-from sqlalchemy.orm import validates, relationship
+from sqlalchemy.orm import relationship, validates
 
 
 class Account(Base):

@@ -1,6 +1,9 @@
+import uuid
+
 import pytest
-from tests.fake_db import Account, Blockchain
+
 from tests.consts import ACCOUNT_EMAIL
+from tests.fake_db import Account, APIKey, Blockchain
 
 
 class BaseTest:
@@ -23,3 +26,10 @@ class BaseTest:
         self.db.add(blockchain)
         self.db.commit()
         yield blockchain
+
+    @pytest.fixture()
+    def authenticated_api_key(self, account):
+        api_key = APIKey(account_id=account.id, key=uuid.uuid4())
+        self.db.add(api_key)
+        self.db.commit()
+        yield api_key

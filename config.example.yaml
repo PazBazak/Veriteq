@@ -1,0 +1,9 @@
+database:
+  host: localhost
+  port: 5432
+  username: user
+  password: password
+  database_name: test_db
+
+api:
+  secret_key: "your_secret_key_here"

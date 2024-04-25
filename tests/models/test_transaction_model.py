@@ -1,7 +1,8 @@
-from tests.fake_db import Transaction, TransactionStatus
-from uuid import uuid4
 import datetime
+from uuid import uuid4
+
 from tests.base import BaseTest
+from tests.fake_db import Transaction, TransactionStatus
 
 
 class TestTransaction(BaseTest):
@@ -12,7 +13,7 @@ class TestTransaction(BaseTest):
             status=TransactionStatus.PENDING,
             account_id=account.id,
             blockchain_id=blockchain.id,
-            timestamp=datetime.datetime.now()
+            timestamp=datetime.datetime.now(),
         )
         self.db.add(new_transaction)
         self.db.commit()
@@ -21,4 +22,3 @@ class TestTransaction(BaseTest):
         assert transaction is not None
         assert transaction.status == TransactionStatus.PENDING
         assert transaction.blockchain_tx_id == blockchain_tx
-

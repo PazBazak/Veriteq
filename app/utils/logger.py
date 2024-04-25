@@ -1,6 +1,6 @@
 import logging
-from logging.handlers import TimedRotatingFileHandler
 from datetime import datetime
+from logging.handlers import TimedRotatingFileHandler
 
 
 def get_logger(name: str = None):
@@ -10,9 +10,7 @@ def get_logger(name: str = None):
     logger.setLevel(logging.INFO)
 
     if not logger.handlers:
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s", "%Y-%m-%d %H:%M:%S %Z"
-        )
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s", "%Y-%m-%d %H:%M:%S %Z")
 
         stream_handler = logging.StreamHandler()
         stream_handler.setFormatter(formatter)

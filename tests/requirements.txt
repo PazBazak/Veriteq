@@ -29,6 +29,10 @@ packaging==24.0
 pluggy==1.4.0
     # via pytest
 pytest==8.1.1
+    # via
+    #   -r .\requirements.in
+    #   pytest-mock
+pytest-mock==3.14.0
     # via -r .\requirements.in
 python-dotenv==1.0.1
     # via -r .\requirements.in

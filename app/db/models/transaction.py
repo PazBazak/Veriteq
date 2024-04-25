@@ -1,15 +1,15 @@
 import enum
 
 from db.database import Base
-from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, String, func, Enum
+from sqlalchemy import TIMESTAMP, Column, Enum, ForeignKey, Integer, String, func
 from sqlalchemy.orm import relationship
 
 
 class TransactionStatus(enum.Enum):
-    PENDING = 'P'
-    CONFIRMING = 'C'
-    FAILED = 'F'
-    SUCCESSFUL = 'S'
+    PENDING = "P"
+    CONFIRMING = "C"
+    FAILED = "F"
+    SUCCESSFUL = "S"
 
 
 class Transaction(Base):
