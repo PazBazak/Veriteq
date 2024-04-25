@@ -1,8 +1,7 @@
-from db.database import Base
-from sqlalchemy import Boolean, Column, Integer, Enum
-from sqlalchemy.orm import relationship
-
 from blockchain_dal.consts import SupportedBlockchains
+from db.database import Base
+from sqlalchemy import Boolean, Column, Enum, Integer
+from sqlalchemy.orm import relationship
 
 
 class Blockchain(Base):

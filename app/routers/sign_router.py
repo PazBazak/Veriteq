@@ -1,8 +1,9 @@
 import uuid
 from datetime import datetime
+from typing import Any
 
 from fastapi import APIRouter
-from pydantic import BaseModel, Field, ValidationInfo, field_validator
+from pydantic import BaseModel, Field, model_validator
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -15,12 +16,20 @@ class SignData(BaseModel):
     metadata: dict = Field(default=None, example={"item_id": "1234"})
 
     # noinspection PyNestedDecorators
-    @field_validator("metadata")
+    @model_validator(mode="before")
     @classmethod
-    def check_at_least_one(cls, v, info: ValidationInfo):
-        if not v and not info.data.get("hash"):
+    def check_card_number_omitted(cls, data: Any) -> Any:
+        if not any([data.get("metadata"), data.get("hash")]):
             raise ValueError("Either hash or metadata must be provided")
-        return v
+
+        return data
+
+    # @field_validator("metadata", "hash")
+    # @classmethod
+    # def check_at_least_one(cls, v, info: ValidationInfo):
+    #     if not v and not info.data.get("hash"):
+    #         raise ValueError("Either hash or metadata must be provided")
+    #     return v
 
 
 class SignDataResponse(BaseModel):
