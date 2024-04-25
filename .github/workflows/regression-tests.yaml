@@ -7,8 +7,7 @@ on:
     branches: [ main, dev]
 
 jobs:
-  build:
-
+  Tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +22,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r ./tests/requirements-tests.txt
+
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=$PYTHONPATH:${{ github.workspace }}/app" >> $GITHUB_ENV
 
     - name: Run pytest
       run: pytest ./tests -vv
