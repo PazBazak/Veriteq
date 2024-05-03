@@ -3,7 +3,7 @@ import uuid
 import pytest
 
 from tests.consts import ACCOUNT_EMAIL
-from tests.fake_db import Account, APIKey, Blockchain
+from db.models import Account, APIKey, Blockchain
 
 
 class BaseTest:

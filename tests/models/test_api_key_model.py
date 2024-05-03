@@ -5,7 +5,7 @@ import pytest
 from sqlalchemy.exc import IntegrityError
 
 from tests.base import BaseTest
-from tests.fake_db import APIKey
+from db.models import APIKey
 
 
 class TestAPIKey(BaseTest):

@@ -1,6 +1,6 @@
 import re
 
-from db.database import Base
+from db.base import Base
 from sqlalchemy import TIMESTAMP, Column, Integer, String, func
 from sqlalchemy.orm import relationship, validates
 

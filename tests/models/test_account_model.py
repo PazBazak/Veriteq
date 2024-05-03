@@ -2,7 +2,7 @@ import pytest
 from sqlalchemy.exc import IntegrityError
 
 from tests.base import BaseTest
-from tests.fake_db import Account
+from db.models import Account
 
 
 class TestAccount(BaseTest):
