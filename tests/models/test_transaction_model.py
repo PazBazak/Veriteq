@@ -2,7 +2,7 @@ import datetime
 from uuid import uuid4
 
 from tests.base import BaseTest
-from tests.fake_db import Transaction, TransactionStatus
+from db.models import Transaction, TransactionStatus
 
 
 class TestTransaction(BaseTest):

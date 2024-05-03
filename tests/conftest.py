@@ -1,10 +1,13 @@
 import pytest
+from collections import defaultdict
+from unittest.mock import patch
 from fastapi.testclient import TestClient
 from main import app
 from sqlalchemy import StaticPool, create_engine
 from sqlalchemy.orm import sessionmaker
 
-from tests.fake_db import Base, get_db
+from db.base import Base
+
 
 engine = create_engine(
     "sqlite:///:memory:",
@@ -37,12 +40,18 @@ def fake_engine():
 
 @pytest.fixture()
 def fake_client():
+    from db.database import get_db
     app.dependency_overrides[get_db] = override_get_db
 
     with TestClient(app) as client:
         yield client
 
     app.dependency_overrides.clear()
+
+
+@pytest.fixture(autouse=True, scope="session")
+def patch_config():
+    patch("utils.config.load_config", return_value=defaultdict(str))
 
 
 @pytest.fixture(autouse=True)
